@@ -1,0 +1,109 @@
+{
+  "multipart": [
+    {
+      "apply": [
+        {
+          "model": "projectlilith:block/hell_fire_floor0"
+        },
+        {
+          "model": "projectlilith:block/hell_fire_floor1"
+        }
+      ]
+    },
+    {
+      "apply": [
+        {
+          "model": "projectlilith:block/hell_fire_side0"
+        },
+        {
+          "model": "projectlilith:block/hell_fire_side1"
+        },
+        {
+          "model": "projectlilith:block/hell_fire_side_alt0"
+        },
+        {
+          "model": "projectlilith:block/hell_fire_side_alt1"
+        }
+      ],
+      "when": {
+        "north": "true"
+      }
+    },
+    {
+      "apply": [
+        {
+          "model": "projectlilith:block/hell_fire_side0"
+        },
+        {
+          "model": "projectlilith:block/hell_fire_side1"
+        },
+        {
+          "model": "projectlilith:block/hell_fire_side_alt0"
+        },
+        {
+          "model": "projectlilith:block/hell_fire_side_alt1"
+        }
+      ],
+      "when": {
+        "east": "true"
+      }
+    },
+    {
+      "apply": [
+        {
+          "model": "projectlilith:block/hell_fire_side0"
+        },
+        {
+          "model": "projectlilith:block/hell_fire_side1"
+        },
+        {
+          "model": "projectlilith:block/hell_fire_side_alt0"
+        },
+        {
+          "model": "projectlilith:block/hell_fire_side_alt1"
+        }
+      ],
+      "when": {
+        "south": "true"
+      }
+    },
+    {
+      "apply": [
+        {
+          "model": "projectlilith:block/hell_fire_side0"
+        },
+        {
+          "model": "projectlilith:block/hell_fire_side1"
+        },
+        {
+          "model": "projectlilith:block/hell_fire_side_alt0"
+        },
+        {
+          "model": "projectlilith:block/hell_fire_side_alt1"
+        }
+      ],
+      "when": {
+        "west": "true"
+      }
+    },
+    {
+      "apply": [
+        {
+          "model": "projectlilith:block/hell_fire_up0"
+        },
+        {
+          "model": "projectlilith:block/hell_fire_up1"
+        },
+        {
+          "model": "projectlilith:block/hell_fire_up_alt0"
+        },
+        {
+          "model": "projectlilith:block/hell_fire_up_alt1"
+        }
+      ],
+      "when": {
+        "up": "true"
+      }
+    }
+  ]
+}
