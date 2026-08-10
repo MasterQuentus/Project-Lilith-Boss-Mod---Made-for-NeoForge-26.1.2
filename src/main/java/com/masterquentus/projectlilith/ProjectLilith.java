@@ -2,6 +2,7 @@ package com.masterquentus.projectlilith;
 
 import com.masterquentus.projectlilith.block.ModBlocks;
 import com.masterquentus.projectlilith.creativemodtab.ModCreativeModTabs;
+import com.masterquentus.projectlilith.entity.ModEntities;
 import com.masterquentus.projectlilith.item.ModItems;
 import com.masterquentus.projectlilith.recipe.ModRecipes;
 import org.slf4j.Logger;
@@ -39,6 +40,7 @@ public class ProjectLilith {
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModEntities.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
 

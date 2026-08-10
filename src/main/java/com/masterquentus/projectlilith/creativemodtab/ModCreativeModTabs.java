@@ -1,6 +1,7 @@
 package com.masterquentus.projectlilith.creativemodtab;
 
 import com.masterquentus.projectlilith.ProjectLilith;
+import com.masterquentus.projectlilith.block.ModBlocks;
 import com.masterquentus.projectlilith.item.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -27,7 +28,9 @@ public class ModCreativeModTabs {
                         output.accept(ModItems.LILITH_CONTRACT);
                         output.accept(ModItems.LILITH_SOUL);
                         output.accept(ModItems.FLINT_AND_HELLFIRE);
+                        output.accept(ModItems.HELLFIRE_CHARGE);
                         output.accept(ModItems.CRIMSON_FANG);
+                        output.accept(ModBlocks.LILITH_TROPHY);
 
 
                     }).build());
