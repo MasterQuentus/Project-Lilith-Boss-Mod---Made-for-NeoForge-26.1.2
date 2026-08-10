@@ -31,7 +31,12 @@ public class ProjectLilith {
 
         ModCreativeModTabs.register(modEventBus);
 
+        System.out.println("MOD CONSTRUCTOR RUNNING");
+
         ModRecipes.register(modEventBus);
+
+        System.out.println("MOD RECIPES REGISTERED");
+
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
 

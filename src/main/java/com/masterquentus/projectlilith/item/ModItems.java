@@ -4,6 +4,7 @@ import com.masterquentus.projectlilith.ProjectLilith;
 import com.masterquentus.projectlilith.item.custom.CrimsonFang;
 import com.masterquentus.projectlilith.item.custom.FlintAndHellfireItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ToolMaterial;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -24,6 +25,7 @@ public class ModItems {
             ITEMS.registerItem("crimson_fang",
                     props -> new CrimsonFang(
                             props.sword(ToolMaterial.NETHERITE, 3, -2.4F)
+                                    .repairable(Items.NETHERITE_INGOT)
                     ));
 
     public static void register(IEventBus eventBus) {

@@ -1,23 +1,18 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " C ",
-    " S ",
-    " F "
-  ],
-  "key": {
-    "C": {
+  "type": "projectlilith:crimson_fang_upgrade",
+  "ingredients": [
+    {
       "item": "projectlilith:lilith_contract"
     },
-    "S": {
+    {
       "item": "projectlilith:lilith_soul"
     },
-    "F": {
+    {
       "item": "projectlilith:crimson_fang"
     }
-  },
+  ],
   "result": {
-    "item": "projectlilith:crimson_fang",
+    "id": "projectlilith:crimson_fang",
     "count": 1
   }
 }
