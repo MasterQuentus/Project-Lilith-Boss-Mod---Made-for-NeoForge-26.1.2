@@ -1,5 +1,9 @@
 package com.masterquentus.projectlilith;
 
+import com.masterquentus.projectlilith.block.ModBlocks;
+import com.masterquentus.projectlilith.creativemodtab.ModCreativeModTabs;
+import com.masterquentus.projectlilith.item.ModItems;
+import com.masterquentus.projectlilith.recipe.ModRecipes;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -24,6 +28,12 @@ public class ProjectLilith {
 
     public ProjectLilith(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
+
+        ModCreativeModTabs.register(modEventBus);
+
+        ModRecipes.register(modEventBus);
+        ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
 

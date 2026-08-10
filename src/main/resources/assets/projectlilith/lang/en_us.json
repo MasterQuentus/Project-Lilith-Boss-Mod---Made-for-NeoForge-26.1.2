@@ -1,13 +1,11 @@
 {
-  "itemGroup.projectlilith": "Example Mod Tab",
-  "block.projectlilith.example_block": "Example Block",
-  "item.projectlilith.example_item": "Example Item",
+  "item.projectlilith.lilith_contract": "Lilith Contract",
+  "item.projectlilith.lilith_soul": "Lilith Soul",
+  "item.projectlilith.flint_and_hellfire": "Flint and Hellfire",
+  "item.projectlilith.crimson_fang": "Crimson Fang",
 
-  "projectlilith.configuration.title": "Project Lilith Configs",
-  "projectlilith.configuration.section.projectlilith.common.toml": "Project Lilith Configs",
-  "projectlilith.configuration.section.projectlilith.common.toml.title": "Project Lilith Configs",
-  "projectlilith.configuration.items": "Item List",
-  "projectlilith.configuration.logDirtBlock": "Log Dirt Block",
-  "projectlilith.configuration.magicNumberIntroduction": "Magic Number Text",
-  "projectlilith.configuration.magicNumber": "Magic Number"
+
+  "block.projectlilith.hell_fire": "Hellfire",
+
+  "creativetab.projectlilith_items": "Project Lilith"
 }

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " C ",
+    " S ",
+    " F "
+  ],
+  "key": {
+    "C": {
+      "item": "projectlilith:lilith_contract"
+    },
+    "S": {
+      "item": "projectlilith:lilith_soul"
+    },
+    "F": {
+      "item": "projectlilith:crimson_fang"
+    }
+  },
+  "result": {
+    "item": "projectlilith:crimson_fang",
+    "count": 1
+  }
+}
