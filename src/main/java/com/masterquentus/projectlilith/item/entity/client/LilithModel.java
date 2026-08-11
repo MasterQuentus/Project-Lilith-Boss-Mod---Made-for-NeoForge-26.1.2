@@ -10,7 +10,7 @@ public class LilithModel extends GeoModel<LilithEntity> {
 
     @Override
     public Identifier getModelResource(GeoRenderState renderState) {
-        return Identifier.fromNamespaceAndPath(ProjectLilith.MOD_ID, "geo/lilith.geo.json");
+        return Identifier.fromNamespaceAndPath(ProjectLilith.MOD_ID, "lilith");
     }
 
     @Override
@@ -20,6 +20,6 @@ public class LilithModel extends GeoModel<LilithEntity> {
 
     @Override
     public Identifier getAnimationResource(LilithEntity animatable) {
-        return Identifier.fromNamespaceAndPath(ProjectLilith.MOD_ID, "animations/lilith.animation.json");
+        return Identifier.fromNamespaceAndPath(ProjectLilith.MOD_ID, "lilith");
     }
 }
