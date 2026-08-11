@@ -2,6 +2,7 @@ package com.masterquentus.projectlilith;
 
 import com.masterquentus.projectlilith.datagen.ModBlockLootTableProvider;
 import com.masterquentus.projectlilith.datagen.ModModelProvider;
+import com.masterquentus.projectlilith.datagen.ModRecipeProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
@@ -24,6 +25,8 @@ public class ProjectLilithDataGen {
         generator.addProvider(true, new ModModelProvider(packOutput));
         generator.addProvider(true, new LootTableProvider(packOutput, Collections.emptySet(),
                 List.of(new LootTableProvider.SubProviderEntry(ModBlockLootTableProvider::new, LootContextParamSets.BLOCK)), lookupProvider));
+
+        generator.addProvider(true, new ModRecipeProvider.Runner(packOutput, lookupProvider));
 
     }
 

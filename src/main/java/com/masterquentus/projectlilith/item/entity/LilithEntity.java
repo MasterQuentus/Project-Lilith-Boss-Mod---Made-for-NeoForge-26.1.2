@@ -6,6 +6,7 @@ import com.geckolib.animatable.manager.AnimatableManager;
 import com.geckolib.animation.AnimationController;
 import com.geckolib.animation.RawAnimation;
 import com.geckolib.util.GeckoLibUtil;
+import com.masterquentus.projectlilith.block.ModBlocks;
 import com.masterquentus.projectlilith.entity.ModEntities;
 import com.masterquentus.projectlilith.item.ModItems;
 import net.minecraft.ChatFormatting;
@@ -572,14 +573,17 @@ public class LilithEntity extends Monster implements GeoEntity {
             // 1. Guaranteed Soul
             this.spawnAtLocation(serverLevel, new ItemStack(ModItems.LILITH_SOUL.get()));
 
-            // 2. High chance for Contract
-            if (random.nextFloat() < 0.75f) {
-                this.spawnAtLocation(serverLevel, new ItemStack(ModItems.LILITH_CONTRACT.get()));
-            }
-
-            // 3. Jackpot - Crimson Fang
-            if (random.nextFloat() < 0.15f) {
+            // 2. Exclusive Drop Pool (Only ONE of these can drop per kill)
+            float roll = random.nextFloat();
+            if (roll < 0.15f) {
+                // Jackpot: Crimson Fang (15% chance)
                 this.spawnAtLocation(serverLevel, new ItemStack(ModItems.CRIMSON_FANG.get()));
+            } else if (roll < 0.50f) {
+                // Rare Drop: Lilith Trophy (35% chance)
+                this.spawnAtLocation(serverLevel, new ItemStack(ModBlocks.LILITH_TROPHY.get()));
+            } else {
+                // Standard Drop: Lilith Contract (50% chance)
+                this.spawnAtLocation(serverLevel, new ItemStack(ModItems.LILITH_CONTRACT.get()));
             }
         }
     }

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:fire_charge",
+    "minecraft:gunpowder",
+    "minecraft:blaze_powder"
+  ],
+  "result": {
+    "id": "projectlilith:hellfire_charge"
+  }
+}

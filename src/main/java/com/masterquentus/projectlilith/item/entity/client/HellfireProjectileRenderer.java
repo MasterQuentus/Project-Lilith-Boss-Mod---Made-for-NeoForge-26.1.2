@@ -51,7 +51,7 @@ public class HellfireProjectileRenderer<T extends HellfireProjectile> extends En
             this.itemModelResolver.updateForTopItem(
                     state.itemRenderState,
                     stack,
-                    ItemDisplayContext.GROUND,
+                    ItemDisplayContext.FIXED,
                     entity.level(),
                     entity,
                     entity.getId()
@@ -66,7 +66,7 @@ public class HellfireProjectileRenderer<T extends HellfireProjectile> extends En
         super.submit(state, poseStack, collector, cameraState);
 
         poseStack.pushPose();
-        poseStack.scale(1.5F, 1.5F, 1.5F);
+        poseStack.scale(1.0F, 1.0F, 1.0F);
         poseStack.mulPose(cameraState.orientation);
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
 

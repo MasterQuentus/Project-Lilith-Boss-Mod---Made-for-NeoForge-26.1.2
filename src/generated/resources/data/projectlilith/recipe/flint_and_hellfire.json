@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": "minecraft:flint",
+    "H": "projectlilith:hellfire_charge"
+  },
+  "pattern": [
+    "H",
+    "F"
+  ],
+  "result": {
+    "id": "projectlilith:flint_and_hellfire"
+  }
+}
