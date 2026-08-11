@@ -21,7 +21,7 @@ public class ModEntities {
             ENTITIES.register("hellfire_projectile", (name) -> EntityType.Builder.<HellfireProjectile>of(HellfireProjectile::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(4)
-                    .updateInterval(10)
+                    .updateInterval(1)
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, name)));
 
     public static final DeferredHolder<EntityType<?>, EntityType<LilithEntity>> LILITH =

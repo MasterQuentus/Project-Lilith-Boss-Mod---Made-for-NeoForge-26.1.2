@@ -104,25 +104,31 @@ public class LilithEntity extends Monster implements GeoEntity {
     protected void addAdditionalSaveData(ValueOutput output) {
         super.addAdditionalSaveData(output);
 
-        // Example for your spinning fireballs list
-        ValueOutput.ValueOutputList list = output.childrenList("SpinningFireballs");
-        for (Entity fireball : this.spinningFireballs) {
-            list.addChild().putString("UUID", fireball.getUUID().toString());
+        // Collect active fireball UUIDs from live entities or pending lists
+        List<UUID> uuidsToSave = new ArrayList<>();
+        for (Entity f : spinningFireballs) {
+            if (f != null && !f.isRemoved()) {
+                uuidsToSave.add(f.getUUID());
+            }
+        }
+        if (uuidsToSave.isEmpty()) {
+            uuidsToSave.addAll(spinningFireballUUIDs);
         }
 
-        // Or simpler if you just store UUIDs as strings:
-        // output.putString("SomeKey", "value");
-        // output.putInt("Phase", this.currentPhase.ordinal());
-        // output.putBoolean("Transformed", this.isTransformed);
+        // Store them using the codec via the ValueOutput API
+        if (!uuidsToSave.isEmpty()) {
+            output.store("SpinningFireballs", net.minecraft.core.UUIDUtil.CODEC.listOf(), uuidsToSave);
+        }
     }
 
     @Override
     protected void readAdditionalSaveData(ValueInput input) {
         super.readAdditionalSaveData(input);
 
-        // Example reading
-        // this.currentPhase = BossPhase.values()[input.getIntOr("Phase", 0)];
-        // this.isTransformed = input.getBooleanOr("Transformed", false);
+        // Clear and restore the fireball UUIDs when loading the world
+        this.spinningFireballUUIDs.clear();
+        input.read("SpinningFireballs", net.minecraft.core.UUIDUtil.CODEC.listOf())
+                .ifPresent(this.spinningFireballUUIDs::addAll);
     }
 
     @Override
@@ -206,9 +212,6 @@ public class LilithEntity extends Monster implements GeoEntity {
                 double targetY = getY() + 2.2;
                 double targetZ = getZ() + Math.sin(angle) * 3.5;
                 fireball.setPos(targetX, targetY, targetZ);
-                fireball.xo = targetX;
-                fireball.yo = targetY;
-                fireball.zo = targetZ;
                 // hasImpulse removed in 26.1
             }
         }
