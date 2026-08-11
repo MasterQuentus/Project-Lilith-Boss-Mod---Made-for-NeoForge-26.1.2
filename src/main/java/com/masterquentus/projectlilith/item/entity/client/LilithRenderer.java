@@ -7,10 +7,9 @@ import com.masterquentus.projectlilith.item.entity.LilithEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
-public class LilithRenderer<R extends LivingEntityRenderState & GeoRenderState>
-        extends GeoEntityRenderer<LilithEntity, R> {
+public class LilithRenderer extends GeoEntityRenderer<LilithEntity, LivingEntityRenderState> {
 
     public LilithRenderer(EntityRendererProvider.Context context) {
-        super(context, ModEntities.LILITH.get());
+        super(context, new LilithModel());
     }
 }

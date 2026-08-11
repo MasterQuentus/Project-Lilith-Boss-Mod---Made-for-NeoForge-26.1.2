@@ -3,6 +3,7 @@ package com.masterquentus.projectlilith;
 import com.masterquentus.projectlilith.block.ModBlocks;
 import com.masterquentus.projectlilith.creativemodtab.ModCreativeModTabs;
 import com.masterquentus.projectlilith.entity.ModEntities;
+import com.masterquentus.projectlilith.events.ClientModEvents;
 import com.masterquentus.projectlilith.item.ModItems;
 import com.masterquentus.projectlilith.recipe.ModRecipes;
 import org.slf4j.Logger;
@@ -45,6 +46,7 @@ public class ProjectLilith {
         NeoForge.EVENT_BUS.register(this);
 
         modEventBus.addListener(this::addCreative);
+        modEventBus.register(ClientModEvents.class);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
