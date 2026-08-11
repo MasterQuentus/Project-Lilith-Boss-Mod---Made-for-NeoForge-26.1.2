@@ -78,7 +78,7 @@ public class HellfireProjectileRenderer<T extends HellfireProjectile> extends En
         // LAYER 2: The Animated Fire
         poseStack.pushPose();
         poseStack.translate(0.0D, 0.2D, -0.05D);
-        poseStack.scale(1.2F, 1.2F, 1.2F);
+        poseStack.scale(1.8F, 1.2F, 1.2F);
 
         RenderType renderType = RenderTypes.entityTranslucentEmissive(FIRE_TEXTURE);
 
