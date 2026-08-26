@@ -3,7 +3,6 @@ package com.masterquentus.projectlilith.recipe;
 import com.masterquentus.projectlilith.ProjectLilith;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.bus.api.IEventBus;
@@ -21,7 +20,10 @@ public class ModRecipes {
             SERIALIZERS.register("crimson_fang_upgrade", () ->
                     new RecipeSerializer<>(
                             MapCodec.unit(CrimsonFangUpgradeRecipe::new),
-                            StreamCodec.unit(new CrimsonFangUpgradeRecipe())
+                            StreamCodec.of(
+                                    (buf, recipe) -> {}, // Writer: writes nothing since it's stateless
+                                    buf -> new CrimsonFangUpgradeRecipe() // Reader: safely instantiates a new recipe
+                            )
                     )
             );
 

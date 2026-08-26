@@ -7,12 +7,7 @@ import com.masterquentus.projectlilith.events.ClientModEvents;
 import com.masterquentus.projectlilith.item.ModItems;
 import com.masterquentus.projectlilith.recipe.ModRecipes;
 import org.slf4j.Logger;
-
 import com.mojang.logging.LogUtils;
-
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
