@@ -1,0 +1,32 @@
+{
+  "parent": "projectlilith:use_flint_and_hellfire",
+  "criteria": {
+    "summoned_lilith": {
+      "conditions": {
+        "items": [
+          {
+            "items": "projectlilith:lilith_contract"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.projectlilith.awakening_darkness.description"
+    },
+    "icon": {
+      "id": "projectlilith:lilith_contract"
+    },
+    "title": {
+      "translate": "advancements.projectlilith.awakening_darkness.title"
+    }
+  },
+  "requirements": [
+    [
+      "summoned_lilith"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

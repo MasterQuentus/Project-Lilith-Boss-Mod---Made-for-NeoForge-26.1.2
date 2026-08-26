@@ -1,0 +1,37 @@
+{
+  "parent": "projectlilith:awakening_darkness",
+  "criteria": {
+    "killed_lilith": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "projectlilith:lilith"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.projectlilith.queen_of_the_abyss.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "id": "projectlilith:flint_and_hellfire"
+    },
+    "title": {
+      "translate": "advancements.projectlilith.queen_of_the_abyss.title"
+    }
+  },
+  "requirements": [
+    [
+      "killed_lilith"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -11,5 +11,15 @@
 
   "boss.projectlilith.lilith": "Lilith",
 
-  "creativetab.projectlilith_items": "Project Lilith"
+  "creativetab.projectlilith_items": "Project Lilith",
+
+  "advancements.projectlilith.use_flint_and_hellfire.title": "Flint and Hellfire",
+  "advancements.projectlilith.use_flint_and_hellfire.description": "Craft and ignite the path using Flint and Hellfire.",
+  "advancements.projectlilith.awakening_darkness.title": "Awakening the Darkness",
+  "advancements.projectlilith.awakening_darkness.description": "Summon Lilith into the world.",
+  "advancements.projectlilith.queen_of_the_abyss.title": "Queen of the Abyss",
+  "advancements.projectlilith.queen_of_the_abyss.description": "Defeat Lilith in combat.",
+  "advancements.projectlilith.relics_of_darkness.title": "Relics of the Dark Queen",
+  "advancements.projectlilith.relics_of_darkness.description": "Claim the Lilith Trophy as proof of your victory."
+
 }

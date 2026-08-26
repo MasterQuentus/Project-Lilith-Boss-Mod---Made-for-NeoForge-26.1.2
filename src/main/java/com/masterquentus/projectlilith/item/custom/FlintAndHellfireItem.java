@@ -1,14 +1,23 @@
 package com.masterquentus.projectlilith.item.custom;
 
+import com.masterquentus.projectlilith.ProjectLilith;
 import com.masterquentus.projectlilith.block.ModBlocks;
 import com.masterquentus.projectlilith.entity.ModEntities;
 import com.masterquentus.projectlilith.item.entity.LilithEntity;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -34,11 +43,33 @@ public class FlintAndHellfireItem extends Item {
 
         // 1. Summon Lilith if clicked directly on Netherrack
         if (serverLevel.getBlockState(pos).is(Blocks.NETHERRACK)) {
+            BlockPos spawnPos = pos.above();
+
+            // Spawn the visual lightning bolt
+            LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(serverLevel, EntitySpawnReason.COMMAND);
+            if (lightning != null) {
+                lightning.setPos(spawnPos.getX() + 0.5D, spawnPos.getY(), spawnPos.getZ() + 0.5D);
+                serverLevel.addFreshEntity(lightning);
+            }
+
+            // Spawn Lilith
             LilithEntity lilith = new LilithEntity(ModEntities.LILITH.get(), serverLevel);
-            lilith.setPos(pos.getX() + 0.5D, pos.getY() + 1.0D, pos.getZ() + 0.5D);
+            lilith.setPos(spawnPos.getX() + 0.5D, spawnPos.getY(), spawnPos.getZ() + 0.5D);
             serverLevel.addFreshEntity(lilith);
 
-            serverLevel.playSound(null, pos, SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.BLOCKS, 1.0F, 0.8F);
+            // --- GRANT AWAKENING THE DARKNESS ADVANCEMENT ---
+            if (player instanceof ServerPlayer serverPlayer) {
+                MinecraftServer server = serverLevel.getServer();
+                AdvancementHolder advancement = server.getAdvancements().get(Identifier.fromNamespaceAndPath(ProjectLilith.MOD_ID, "awakening_darkness"));
+                if (advancement != null) {
+                    PlayerAdvancements playerAdvancements = server.getPlayerList().getPlayerAdvancements(serverPlayer);
+                    for (String criterion : playerAdvancements.getOrStartProgress(advancement).getRemainingCriteria()) {
+                        playerAdvancements.award(advancement, criterion);
+                    }
+                }
+            }
+            // ------------------------------------------------
+
             damageItem(stack, player, context);
             return InteractionResult.SUCCESS;
         }

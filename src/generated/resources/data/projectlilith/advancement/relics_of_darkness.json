@@ -1,0 +1,34 @@
+{
+  "parent": "projectlilith:queen_of_the_abyss",
+  "criteria": {
+    "has_trophy": {
+      "conditions": {
+        "items": [
+          {
+            "items": "projectlilith:lilith_trophy"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.projectlilith.relics_of_darkness.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "id": "projectlilith:lilith_trophy"
+    },
+    "title": {
+      "translate": "advancements.projectlilith.relics_of_darkness.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_trophy"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
