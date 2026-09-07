@@ -54,6 +54,7 @@ public class LilithEntity extends Monster implements GeoEntity {
     private int darkVeilCooldown = 0;
     private int shadowDashCooldown = 0;
     private int darkDominionCooldown = 0; // Added cooldown
+    private int batSwarmCooldown = 0;
     private boolean isUsingDarkDominion = false;
     private int abilityPhaseTimer = 0;
     private static final double MAX_FLOAT_HEIGHT = 12.0;
@@ -270,6 +271,7 @@ public class LilithEntity extends Monster implements GeoEntity {
         if (shadowDashCooldown > 0) shadowDashCooldown--;
         if (darkDominionCooldown > 0) darkDominionCooldown--;
         if (hellfireCooldown > 0) hellfireCooldown--;
+        if (batSwarmCooldown > 0) batSwarmCooldown--;
         if (attackTimer > 0) attackTimer--;
         else isAttacking = false;
 
@@ -283,9 +285,15 @@ public class LilithEntity extends Monster implements GeoEntity {
             }
 
             // PRIORITY 2: Bat Swarm
-            if (healthPercent < 0.4 && random.nextInt(100) == 0) {
+            if (healthPercent < 0.4 &&
+                    batSwarmCooldown <= 0 &&
+                    random.nextInt(100) == 0) {
+
                 triggerBatSwarm(this);
                 broadcastAbility("Bat Swarm");
+
+                batSwarmCooldown = 1800; // 60 seconds
+
                 return;
             }
 
