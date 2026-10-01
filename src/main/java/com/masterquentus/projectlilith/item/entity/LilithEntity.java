@@ -11,6 +11,7 @@ import com.masterquentus.projectlilith.entity.ModEntities;
 import com.masterquentus.projectlilith.item.ModItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
@@ -151,7 +152,8 @@ public class LilithEntity extends Monster implements GeoEntity {
             UUID.randomUUID(),
             Component.translatable("boss.projectlilith.lilith"),   // update the key if needed
             BossEvent.BossBarColor.RED,
-            BossEvent.BossBarOverlay.PROGRESS
+            BossEvent.BossBarOverlay.NOTCHED_10
+
     );
 
     public static AttributeSupplier setAttributes() {
@@ -334,6 +336,11 @@ public class LilithEntity extends Monster implements GeoEntity {
             return true;
         }
 
+        // Immunity to lightning
+        if (source.is(DamageTypes.LIGHTNING_BOLT)) {
+            return true;
+        }
+
         // Immunity to fire damage types
         if (source.is(DamageTypes.IN_FIRE)
                 || source.is(DamageTypes.ON_FIRE)
@@ -463,12 +470,76 @@ public class LilithEntity extends Monster implements GeoEntity {
         }
 
         @Override
-        public void die(DamageSource cause) {
-            super.die(cause);
-            if (!level().isClientSide() && owner != null) {
-                owner.notifyBatDeath(this);
+        protected void tickDeath() {
+            this.deathTime++;
+
+            // Freeze her in place while dying
+            this.setDeltaMovement(0, 0, 0);
+
+            if (!this.level().isClientSide()) {
+                ServerLevel serverLevel = (ServerLevel) this.level();
+
+                // Play shrieking sounds at the start
+                if (this.deathTime == 1) {
+                    this.playSound(SoundEvents.WITHER_DEATH, 1.0F, 0.5F);
+                    this.playSound(SoundEvents.GHAST_SCREAM, 1.0F, 0.5F);
+                }
+
+                // Spawn aggressive soul particles rising up while she dies
+                if (this.deathTime % 5 == 0) {
+                    serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME,
+                            this.getX(), this.getY() + 1.0, this.getZ(),
+                            15, 0.5, 1.0, 0.5, 0.1);
+                }
+
+                // Massive explosion right before she actually dies
+                if (this.deathTime == 95) {
+                    serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER,
+                            this.getX(), this.getY() + 1.0, this.getZ(),
+                            1, 0, 0, 0, 0);
+                    this.playSound(SoundEvents.GENERIC_EXPLODE.value(), 2.0F, 1.0F);
+                }
+
+                // Extended from the default 20 to 100 (5 seconds)
+                if (this.deathTime >= 100) {
+                    this.level().broadcastEntityEvent(this, (byte) 60);
+
+                    // This triggers your custom die() logic (loot drops) and deletes the entity
+                    this.remove(Entity.RemovalReason.KILLED);
+                    this.dropExperience(serverLevel, null);
+                }
             }
         }
+
+        // Make sure your die() method from earlier only handles the loot drops,
+// NOT the actual entity removal, so we don't drop loot twice.
+        @Override
+        public void die(DamageSource source) {
+            // We move the sound to tickDeath(), so just handle loot here
+            if (!level().isClientSide()) {
+                ServerLevel serverLevel = (ServerLevel) level();
+
+                // 1. Guaranteed Soul
+                this.spawnAtLocation(serverLevel, new ItemStack(ModItems.LILITH_SOUL.get()));
+
+                // 2. Exclusive Drop Pool
+                float roll = random.nextFloat();
+                if (roll < 0.15f) {
+                    this.spawnAtLocation(serverLevel, new ItemStack(ModItems.CRIMSON_FANG.get()));
+                } else if (roll < 0.50f) {
+                    this.spawnAtLocation(serverLevel, new ItemStack(ModBlocks.LILITH_TROPHY.get()));
+                } else {
+                    this.spawnAtLocation(serverLevel, new ItemStack(ModItems.LILITH_CONTRACT.get()));
+                }
+            }
+            super.die(source); // Let vanilla handle any backend death tracking
+        }
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        // Returning false ensures the boss never naturally despawns
+        return false;
     }
 
     // Dark Dominion spawns hostile skeleton minions with bows & targets players
@@ -494,27 +565,38 @@ public class LilithEntity extends Monster implements GeoEntity {
 
 
     private void spawnDarkDominionWave() {
+        if (level().isClientSide()) return;
+        ServerLevel serverLevel = (ServerLevel) level();
+
         AABB area = new AABB(blockPosition()).inflate(12);
         List<Player> nearbyPlayers = level().getEntitiesOfClass(Player.class, area);
 
-        for (int i = 0; i < 6; i++) {
-            EntityType<? extends Monster> type = switch (random.nextInt(6)) {
+        for (int i = 0; i < 11; i++) {
+            EntityType<? extends Monster> type = switch (random.nextInt(13)) {
                 case 0 -> EntityType.SKELETON;
                 case 1 -> EntityType.WITHER_SKELETON;
                 case 2 -> EntityType.ZOMBIE;
                 case 3 -> EntityType.HUSK;
                 case 4 -> EntityType.DROWNED;
+                case 5 -> EntityType.EVOKER;
+                case 6 -> EntityType.STRAY;
+                case 7 -> EntityType.BOGGED;
+                case 8 -> EntityType.PARCHED;
+                case 9 -> EntityType.PILLAGER;
+                case 10 -> EntityType.BREEZE;
+                case 11 -> EntityType.VINDICATOR;
                 default -> EntityType.WITCH;
             };
 
-            // create now requires EntitySpawnReason
             Monster mob = type.create(level(), EntitySpawnReason.MOB_SUMMONED);
             if (mob != null) {
                 double xOff = random.nextDouble() * 6 - 3;
                 double zOff = random.nextDouble() * 6 - 3;
 
-                // use setPos instead of moveTo
                 mob.setPos(getX() + xOff, getY(), getZ() + zOff);
+
+                // Call finalizeSpawn using serverLevel and serverLevel.getCurrentDifficultyAt()
+                mob.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(mob.blockPosition()), EntitySpawnReason.MOB_SUMMONED, null);
 
                 if (!nearbyPlayers.isEmpty()) {
                     mob.setTarget(nearbyPlayers.get(random.nextInt(nearbyPlayers.size())));
